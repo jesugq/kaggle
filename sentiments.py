@@ -31,3 +31,4 @@ file.close()
 # Write to CSV File
 file = csv.writer(open(filename, "a+"))
 file.writerow([data["model"], data["score_tag"], data["agreement"], data["subjectivity"], data["confidence"], data["irony"]])
+file.close()
