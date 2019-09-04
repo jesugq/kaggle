@@ -21,6 +21,7 @@ csvtarget.writerow(["model", "score_tag", "agreement", "subjectivity", "confiden
 
 # Obtain Text
 csvreader = csv.reader(readerfile, delimiter=',')
+next(csvreader)
 csvtarget = csv.writer(targetfile)
 for row in csvreader:
     text = row[0]
