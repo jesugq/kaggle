@@ -1,6 +1,7 @@
 # Imports
 import csv
 import json
+import time
 import requests
 
 # Settings
@@ -40,7 +41,9 @@ for row in csvreader:
 
     # Write to CSV File
     csvtarget.writerow([code, model, score_tag, agreement, subjectivity, confidence, irony, text])
-
+    
+    # MeaningCloud's Requests per Second Limit
+    time.sleep(2)
 # Closing Files
 targetfile.close()
 readerfile.close()
