@@ -17,13 +17,15 @@ readerfile = open(readername, encoding="ISO-8859-1")
 
 # Table header Creation
 csvtarget = csv.writer(targetfile)
-csvtarget.writerow(["model", "score_tag", "agreement", "subjectivity", "confidence", "irony", "text"])
+csvtarget.writerow(["index", "model", "score_tag", "agreement", "subjectivity", "confidence", "irony", "text"])
 
 # Obtain Text
 csvreader = csv.reader(readerfile, delimiter=',')
 next(csvreader)
 csvtarget = csv.writer(targetfile)
+index = 0
 for row in csvreader:
+    index += 1
     text = row[0]
     payload = "".join((settings, text))
 
@@ -40,7 +42,7 @@ for row in csvreader:
     irony = data.get("irony", "")
 
     # Write to CSV File
-    csvtarget.writerow([model, score_tag, agreement, subjectivity, confidence, irony, text])
+    csvtarget.writerow([index, model, score_tag, agreement, subjectivity, confidence, irony, text])
     
     # MeaningCloud's Requests per Second Limit
     time.sleep(2)
