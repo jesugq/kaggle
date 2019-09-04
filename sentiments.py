@@ -1,4 +1,5 @@
 # Imports
+import json
 import requests
 
 # Settings
@@ -13,4 +14,12 @@ print(payload)
 
 # Request
 response = requests.request("POST", url, data=payload.encode('utf-8'), headers=headers)
-print(response.text)
+print(response.json())
+
+# Convert to JSON
+data = response.json()
+
+# Print to File
+file = open("sentiments.json", "a+")
+json.dump(data, file)
+file.close()
