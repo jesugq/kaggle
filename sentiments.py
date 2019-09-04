@@ -11,14 +11,12 @@ headers = {'content-type': 'application/x-www-form-urlencoded'}
 # Opening Files
 targetname = "./sentiments.csv"
 readername = "./kaggle/Training.csv"
-targetfile = open(targetname, "a+")
+targetfile = open(targetname, "w+")
 readerfile = open(readername, encoding="ISO-8859-1")
 
 # Table header Creation
-opened = targetfile.read(1)
-if not opened:
-    csvtarget = csv.writer(targetfile)
-    csvtarget.writerow(["model", "score_tag", "agreement", "subjectivity", "confidence", "irony"])
+csvtarget = csv.writer(targetfile)
+csvtarget.writerow(["model", "score_tag", "agreement", "subjectivity", "confidence", "irony", "text"])
 
 # Obtain Text
 csvreader = csv.reader(readerfile, delimiter=',')
@@ -31,8 +29,16 @@ for row in csvreader:
     response = requests.request("POST", url, data=payload.encode('utf-8'), headers=headers)
     data = response.json()
 
+    # Get Attributes Individually
+    model = data.get("model", "")
+    score_tag = data.get("score_tag", "")
+    agreement = data.get("agreement", "")
+    subjectivity = data.get("subjectivity", "")
+    confidence = data.get("confidence", "")
+    irony = data.get("irony", "")
+
     # Write to CSV File
-    csvtarget.writerow([data["model"], data["score_tag"], data["agreement"], data["subjectivity"], data["confidence"], data["irony"]])
+    csvtarget.writerow([model, score_tag, agreement, subjectivity, confidence, irony, text])
 
 # Closing Files
 targetfile.close()
