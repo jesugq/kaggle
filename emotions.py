@@ -4,8 +4,8 @@ import time
 import requests
 
 # Settings
-url = "'X-ApiKey: 5bf59ad3450f583a8505fd13e44e8606' 'https://apiv2.indico.io/sentiment' --data '{\"data\": \""
-lru = "\"}'"
+url = "https://apiv2.indico.io/sentiment"
+settings = "api_key=5bf59ad3450f583a8505fd13e44e8606&data="
 
 # Opening Files
 targetname = "./emotions.csv"
@@ -24,15 +24,12 @@ csvtarget = csv.writer(targetfile)
 for row in csvreader:
     text = row[0]
     score = row[1]
-    payload = url + text + lru
-    print("\n\n")
-    print(payload)
-    print("\n\n")
-
-    response = requests.request("GET", payload)
+    payload = "".join((settings, text))
+    
+    # Request to JSON
+    response = requests.request("POST", url, data=payload.encode('utf-8'))
     data = response.json()
-
-    csvtarget.writerow([response, text, score])
+    print(data)
 
 # Closing Files
 targetfile.close()
