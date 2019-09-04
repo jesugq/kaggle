@@ -1,4 +1,5 @@
 # Imports
+import csv
 import json
 import requests
 
@@ -19,7 +20,14 @@ print(response.json())
 # Convert to JSON
 data = response.json()
 
-# Print to File
-file = open("sentiments.json", "a+")
-json.dump(data, file)
+# File Emptyness Verifier
+filename = "sentiments.csv"
+file = open(filename)
+opened = file.read(1)
 file.close()
+
+# Create Table Header
+file = csv.writer(open(filename, "a+"))
+if not opened:
+    file.writerow(["model", "score_tag", "agreement", "subjectivity", "confidence", "irony"])
+file.writerow([data["model"], data["score_tag"], data["agreement"], data["subjectivity"], data["confidence"], data["irony"]])
