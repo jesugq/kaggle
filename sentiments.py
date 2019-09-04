@@ -7,6 +7,6 @@ payload = "".join((settings, text))
 print(payload)
 headers = {'content-type': 'application/x-www-form-urlencoded'}
 
-response = requests.request("POST", url, data=payload.encode('utf-8|'), headers=headers)
+response = requests.request("POST", url, data=payload.encode('utf-8'), headers=headers)
 
 print(response.text)
