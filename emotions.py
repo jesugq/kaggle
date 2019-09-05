@@ -1,12 +1,12 @@
 # Imports
 import csv
+import json
 import time
 import requests
 
 # Settings
-url = "https://apiv2.indico.io/sentiment"
+url = "https://apiv2.indico.io/emotion"
 key = "5bf59ad3450f583a8505fd13e44e8606"
-settings = "&data="
 
 # Opening Files
 targetname = "./emotions.csv"
@@ -16,7 +16,7 @@ readerfile = open(readername, encoding="ISO-8859-1")
 
 # Table header creation
 csvtarget = csv.writer(targetfile)
-csvtarget.writerow(["emotion", "text", "score"])
+csvtarget.writerow(["anger", "joy", "fear", "sadness", "surprise", "text", "score"])
 
 # Obtain Text
 csvreader = csv.reader(readerfile, delimiter=',')
@@ -26,18 +26,21 @@ for row in csvreader:
     # Obtain values from our file
     text = row[0]
     score = row[1]
-    payload = "".join((settings, text))
     
     # Request to JSON
-    response = requests.request("POST", url, headers={"X-ApiKey": key}, data={"data": payload.encode('utf-8')})
-    data = response.json()
+    response = requests.request("POST", url, headers={"X-ApiKey": key}, data={"data": text.encode('utf-8')})
+    data = response.json().get("results", "")
     print(data)
 
     # Get Attributes Individually
-    emotion = data.get("results", "")
+    anger = data.get("anger", "")
+    joy = data.get("joy", "")
+    fear = data.get("fear", "")
+    sadness = data.get("sadness", "")
+    surprise = data.get("surprise", "")
 
     # Write to CSV File
-    csvtarget.writerow([emotion, text, score])
+    csvtarget.writerow([anger, joy, fear, sadness, surprise, text, score])
 
 # Closing Files
 targetfile.close()
