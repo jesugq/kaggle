@@ -30,7 +30,6 @@ for row in csvreader:
     # Request to JSON
     response = requests.request("POST", url, headers={"X-ApiKey": key}, data={"data": text.encode('utf-8')})
     data = response.json().get("results", "")
-    print(data)
 
     # Get Attributes Individually
     anger = data.get("anger", "")
