@@ -5,7 +5,8 @@ import requests
 
 # Settings
 url = "https://apiv2.indico.io/sentiment"
-settings = "api_key=5bf59ad3450f583a8505fd13e44e8606&data="
+key = "5bf59ad3450f583a8505fd13e44e8606"
+settings = "&data="
 
 # Opening Files
 targetname = "./emotions.csv"
@@ -27,7 +28,7 @@ for row in csvreader:
     payload = "".join((settings, text))
     
     # Request to JSON
-    response = requests.request("POST", url, data=payload.encode('utf-8'))
+    response = requests.request("POST", url, headers={"X-ApiKey": key}, data=payload.encode('utf-8'))
     data = response.json()
     print(data)
 
