@@ -20,10 +20,13 @@ csvtarget.writerow(["anger", "joy", "fear", "sadness", "surprise", "text", "scor
 
 # Obtain Text
 csvreader = csv.reader(readerfile, delimiter=',')
+# for i in range(639):
 next(csvreader)
 csvtarget = csv.writer(targetfile)
+index = 0
 for row in csvreader:
     # Obtain values from our file
+    index += 1
     text = row[0]
     score = row[1]
     
@@ -32,14 +35,23 @@ for row in csvreader:
     data = response.json().get("results", "")
 
     # Get Attributes Individually
-    anger = data.get("anger", "")
-    joy = data.get("joy", "")
-    fear = data.get("fear", "")
-    sadness = data.get("sadness", "")
-    surprise = data.get("surprise", "")
+    try:
+        anger = data.get("anger", "")
+        joy = data.get("joy", "")
+        fear = data.get("fear", "")
+        sadness = data.get("sadness", "")
+        surprise = data.get("surprise", "")
+    except:
+        print(data)
+        print(response)
 
     # Write to CSV File
     csvtarget.writerow([anger, joy, fear, sadness, surprise, text, score])
+
+    # Wait to prevent AttributeErrors due to going too fast
+    if index > 500:
+        time.sleep(2)
+        index = 0
 
 # Closing Files
 targetfile.close()
