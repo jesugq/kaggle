@@ -24,6 +24,7 @@ csvreader = csv.reader(readerfile, delimiter=',')
 next(csvreader)
 csvtarget = csv.writer(targetfile)
 for row in csvreader:
+    # Obtain values from our file
     text = row[0]
     score = row[1]
     payload = "".join((settings, text))

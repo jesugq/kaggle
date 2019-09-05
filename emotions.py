@@ -23,6 +23,7 @@ csvreader = csv.reader(readerfile, delimiter=',')
 next(csvreader)
 csvtarget = csv.writer(targetfile)
 for row in csvreader:
+    # Obtain values from our file
     text = row[0]
     score = row[1]
     payload = "".join((settings, text))
@@ -31,6 +32,12 @@ for row in csvreader:
     response = requests.request("POST", url, headers={"X-ApiKey": key}, data={"data": payload.encode('utf-8')})
     data = response.json()
     print(data)
+
+    # Get Attributes Individually
+    emotion = data.get("results", "")
+
+    # Write to CSV File
+    csvtarget.writerow([emotion, text, score])
 
 # Closing Files
 targetfile.close()
