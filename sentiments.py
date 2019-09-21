@@ -27,7 +27,7 @@ def defineArguments():
 # Opening Files
 def openFiles():
     readername = "../input/Training.csv"
-    writername = "../extracted/sentiments.csv"
+    writername = "../extracted/training/sentiments.csv"
     readerfile = open(readername, encoding="ISO-8859-1")
     writerfile = open(writername, "w+")
     
