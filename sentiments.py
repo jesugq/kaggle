@@ -65,8 +65,8 @@ def httpSentiments(url, headers, payload):
 def createHeader(writercsv):
     writercsv.writerow(
         [
-            "index"
-            "rating"
+            "index",
+            "rating",
             "model",
             "score_tag",
             "agreement",
@@ -95,12 +95,12 @@ def createRow(writercsv, index, rating, data):
 def extractAttributes(json):
     data = dict()
 
-    data["model"] = json.get("model")
-    data["score_tag"] = json.get("score_tag")
-    data["agreement"] = json.get("agreement")
-    data["subjectivity"] = json.get("subjectivity")
-    data["confidence"] = json.get("confidence")
-    data["irony"] = json.get("irony")
+    data["model"] = json['model']
+    data["score_tag"] = json["score_tag"]
+    data["agreement"] = json["agreement"]
+    data["subjectivity"] = json["subjectivity"]
+    data["confidence"] = json["confidence"]
+    data["irony"] = json["irony"]
 
     return data
 
