@@ -26,8 +26,8 @@ def defineArguments():
 
 # Opening Files
 def openFiles():
-    readername = "../input/Training.csv"
-    writername = "../extracted/training/sentiments.csv"
+    readername = "../input/Testing.csv"
+    writername = "../extracted/testing/sentiments.csv"
     readerfile = open(readername, encoding="ISO-8859-1")
     writerfile = open(writername, "w+")
     
@@ -48,9 +48,14 @@ def createBuilders(readerfile, writerfile):
     return readercsv, writercsv
 
 # Obtain position, text and rating
-def obtainValues(row):
+def obtainTrainingValues(row):
     text = row[0]
     rating = row[1]
+
+    return text, rating
+def obtainTestingValues(row):
+    text = row[1]
+    rating = "?"
 
     return text, rating
 
@@ -120,7 +125,7 @@ createHeader(writercsv)
 index = 1
 for row in readercsv:
     # Obtain the values from each row
-    text, rating = obtainValues(row)
+    text, rating = obtainTestingValues(row)
 
     # Parse for usage in http request
     parsed = urllib.parse.quote(text)

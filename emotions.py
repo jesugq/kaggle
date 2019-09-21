@@ -23,10 +23,10 @@ def defineArguments():
 
 # Opening Files
 def openFiles():
-    readername = "../input/Training.csv"
-    writername = "../extracted/training/emotions.csv"
+    readername = "../input/Testing.csv"
+    writername = "../extracted/testing/emotions.csv"
     readerfile = open(readername, encoding="ISO-8859-1")
-    writerfile = open(writername, "a+")
+    writerfile = open(writername, "w+")
     
     return readerfile, writerfile
 
@@ -53,9 +53,14 @@ def scrollToPosition(index, position, readercsv):
     return index
 
 # Obtain position, text and rating
-def obtainValues(row):
+def obtainTrainingValues(row):
     text = row[0]
     rating = row[1]
+
+    return text, rating
+def obtainTestingValues(row):
+    text = row[1]
+    rating = "?"
 
     return text, rating
 
@@ -129,19 +134,21 @@ arguments = defineArguments()
 readerfile, writerfile = openFiles()
 readercsv, writercsv = createBuilders(readerfile, writerfile)
 
+# Index should be created before the next step
+index = 1
+
 # Write the header
-# createHeader(writercsv)
+createHeader(writercsv)
 
 # Or scroll the reader down if continuing a crashed instance
-index = 1
-position = 1122
-index = scrollToPosition(index, position, readercsv)
-print("Starting at index ", index, " in this run.")
+# position = 1122
+# index = scrollToPosition(index, position, readercsv)
+# print("Starting at index ", index, " in this run.")
 
 # Run for every line in the readerfile
 for row in readercsv:
     # Obtain the values from each row
-    text, rating = obtainValues(row)
+    text, rating = obtainTestingValues(row)
 
     # Parse for usage in http request
     parsed = urllib.parse.quote(text)
