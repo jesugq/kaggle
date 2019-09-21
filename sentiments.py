@@ -117,7 +117,7 @@ readercsv, writercsv = createBuilders(readerfile, writerfile)
 createHeader(writercsv)
 
 # Run for every line in the readerfile
-index = 0
+index = 1
 for row in readercsv:
     # Obtain the values from each row
     text, rating = obtainValues(row)
